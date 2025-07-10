@@ -652,7 +652,8 @@ def analyze(w: WorkspaceClient, prompts: Prompts):
     ctx = ApplicationContext(w)
 
     logger.debug(f"User: {ctx.current_user}")
-    Analyzer.analyze(prompts)
+    is_debug = logger.getEffectiveLevel() == logging.DEBUG
+    Analyzer.analyze(prompts, is_debug=is_debug)
 
 
 if __name__ == "__main__":
