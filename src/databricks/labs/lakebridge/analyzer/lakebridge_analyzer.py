@@ -31,7 +31,11 @@ class LakebridgeAnalyzer(Analyzer):
             default=f"{directory.as_posix()}/lakebridge-analyzer-results.xlsx",
             validate=lambda p: Path(p).parent.exists() and os.access(Path(p).parent, os.W_OK),
         )
-        return directory / Path(filename).with_suffix(".xlsx")
+        return (
+            directory / Path(filename).with_suffix(".xlsx")
+            if len(filename.split("/")) == 1
+            else Path(filename).with_suffix(".xlsx")
+        )
 
     def run_analyzer(self):
         """Run the analyzer."""
