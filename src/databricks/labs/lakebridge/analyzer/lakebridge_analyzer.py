@@ -27,7 +27,7 @@ class LakebridgeAnalyzer(Analyzer):
     def _get_result_file_path(self, directory: Path) -> Path:
         """Get the result file path - accepts either filename or full path."""
         filename = self._prompts.question(
-            "Enter report filename or custom export path including file name (without extension)",
+            "Enter report file name or custom export path including file name (without extension)",
             default=f"{directory.as_posix()}/lakebridge-analyzer-results.xlsx",
             validate=lambda p: Path(p).parent.exists() and os.access(Path(p).parent, os.W_OK),
         )
