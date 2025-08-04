@@ -81,16 +81,16 @@ def check_path(path: str) -> bool:
         parent = path_obj.parent
         return parent.exists() and os.access(parent, os.W_OK)
 
-    except (OSError, ValueError):
-        logger.warning("Could not validate path: %s", path)
+    except OSError as e:
+        logger.warning(f"Could not validate path: {path}, error: {e}")
         return False
 
 
 def move_tmp_file(tmp_path: Path, output_path: Path) -> None:
     """Process file from a temp directory"""
     try:
-       move(tmp_path, output_path.parent)
-    except (FileExistsError, Error) as e:
+        move(tmp_path, output_path.parent)
+    except (FileExistsError, Error):
         timestamp = datetime.now().strftime("%Y%m%d-%H%M%S")
         new_output_path = output_path.parent / timestamp
         new_output_path.mkdir(exist_ok=True)

@@ -34,13 +34,13 @@ class LakebridgeAnalyzer(Analyzer):
         )
         return directory / Path(filename) if len(filename.split("/")) == 1 else Path(filename)
 
-    def _get_source_tech(self, platform: str = None) -> str:
+    def _get_source_tech(self, platform: str | None = None) -> str:
         """Validate source technology or prompt for a valid source"""
         if platform is None or platform not in self.supported_source_technologies():
             if platform is not None:
                 logger.warning(f"Invalid source technology {platform}")
             platform = self._prompts.choice("Select the source technology", self.supported_source_technologies())
-        return _PLATFORM_TO_SOURCE_TECHNOLOGY.get(platform)
+        return _PLATFORM_TO_SOURCE_TECHNOLOGY[platform]
 
     @staticmethod
     def _temp_xlsx_path(results_dir: Path | str) -> Path:
